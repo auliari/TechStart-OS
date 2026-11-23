@@ -1,0 +1,533 @@
+    1  apt-mark manual $(dpkg -1 | awk '$1=="ii" && $2 ~ /^libreoffice/ {print $2}')
+    2  [200~apt-mark manual $(dpkg -1 | awk '$1=="ii" && $2 ~ /^libreoffice/ {print $2}')
+    3  dpkg: error: unknown option -1
+    4  ~apt-mark manual $(dpkg -1 | awk '$1=="ii" && $2 ~ /^libreoffice/ {print $2}')
+    5  dpkg: error: unknown option -1
+    6  apt-mark manual $(dpkg -l | awk '$1=="ii" && $2 ~ /^libreoffice/ {print $2}')
+    7  apt-get purge rhytmbox rhytmbox-plugins rhythms-data rhythm-plugin-alternative-toolbar
+    8  apt-get purge transmission-gtk transmission-common
+    9  apt-get purge remmina remmina-common remmina-plugin-rdp remmina-plugin-secret remiina-plugin-vnc
+   10  apt-get purge simple-scan
+   11  apt-get purge yelp yelp-xsl
+   12  apt-get purge rhytmbox rhytmbox-plugins rhythmbox-data rhythmbox-plugin-alternative-toolbar
+   13  apt-get purge rhythmbox-data rhythmbox-plugin-alternative-toolba
+   14  apt-get purge rhythmbox-data rhythmbox-plugin-alternative-toolbar
+   15  apt-get purge rhytmbox rhytmbox-plugins
+   16  apt-get purge rhythmbox rhythmbox-plugin
+   17  apt-get purge rhythmbox rhythmbox-plugins
+   18  apt-get purge rhythmbox rhythmbox-plugins rhythmbox-data rhythmbox-plugin-alternative-toolbar
+   19  apt-get update
+   20  apt-get install -y build-essential gdb git python3 python3-pip python3-venv php-cli php-mbstring php-xml php-curl php-mysql geany geany-plugins qtcreator qt6-base-dev cmake gimp papirus-icon-theme
+   21  apt-get install -y wget gpg
+   22  wget -O /root/code.deb  "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+   23  apt-get install -y /root/code.deb
+   24  rm /root/code.deb
+   25  apt-get install -y curl git unzip xz-utils zip libglu1-mesa clang cmake ninja-build  pkg-config libgtk-3-dev
+   26  git clone https://github.com/flutter/flutter.git -b stable /opt/flutter
+   27  echo 'export PATH="$PATH:/opt/flutter/bin"' > /etc/profile.d/flutter.sh
+   28  git config --system --add safe.directory /opt/flutter
+   29  chgrp -R sudo /opt/flutter
+   30  chmod -R g+rwX /opt/flutter
+   31  cp -a /root/android-studio /opt/
+   32  ln -s /opt/android-studio/bin/studio.sh /usr/local/bin/android-studio
+   33  [200~printf '%s\n' '[Desktop Entry]' 'Type=Application' 'Name=Android Studio' 'Comment=IDE pengembangan aplikasi Android' 'Exec=/opt/android-studio/bin/studio.sh' 'Icon=/opt/android-studio/bin/studio.png' 'Categories=Development;IDE;' 'Terminal=false' 'StartupWMClass=jetbrains-studio' > /usr/share/applications/android-studio.desktop~
+   34  cat > /usr/share/applications/android-studio.desktop << 'EOF'
+   35  [Desktop Entry]
+   36  Type=Application
+   37  Name=Android Studio
+   38  Comment=IDE pengembangan aplikasi Android
+   39  Exec=/opt/android-studio/bin/studio.sh
+   40  Icon=/opt/android-studio/bin/studio.png
+   41  Categories=Development;IDE;
+   42  Terminal=false
+   43  StartupWMClass=jetbrains-studio
+   44  EOF
+   45  mkdir -p /usr/share/techstart/icons
+   46  cp /root/figma.png /usr/share/techstart/icons/figma.png
+   47  find /media -iname "figma.png"
+   48  dpkg -l | grep -E 'geany|qtcreator|gimp|papirus' | awk '{print $2}'1
+   49  ls /usr/share/applications | grep -iE 'code|android|figma'; ls -d /opt/flutter /opt/android-studio
+   50  printf '[Desktop Entry]\nType=Application\nName=Figma (Web)\nComment=Desain UI/UX lewat browser\nExec=firefox https://www.figma.com\nIcon=applications-internet\nCategories=Graphics;Development;\nTerminal=false\n' > /usr/share/applications/figma-web.desktop
+   51  rm /usr/share/applications/android-studio.desktop~
+   52  cat /usr/share/applications/figma
+   53  cat /usr/share/applications/figma-web.desktop
+   54  ls /usr/share/applications | grep -iE 'geany|qtcreator|gimp|libreoffice-(writer|calc|impress)'
+   55  ls /usr/share/themes | grep -iE yaru
+   56  ls /usr/share/icons | grep -iE 'papirus|yaru'
+   57  ls /usr/share/applications | grep -i nautilus; ls /var/lib/snapd/desktop/applications | grep -i firefox
+   58  mkdir -p /etc/dconf/profile /etc/dconf/db/local.d
+   59  grep -q 'system-db:local' /etc/dconf/profile/user 2>/dev/null 
+   60  grep -q 'system-db:local' /etc/dconf/profile/user 2>/dev/null || printf 'user-db:user\nsystem-db:local\n' > /etc/dconf/profile/user 
+   61  cat /etc/dconf/profile/user
+   62  ls /usr/share/themes | grep -x 'Yaru-blue-dark'
+   63  ls /usr/share/icons | grep -i papirus
+   64  mkdir -p /usr/share/backgrounds/techstart /usr/share/techstart
+   65  cat > /etc/dconf/db/local.d/00-techstart << 'EOF'
+[org/gnome/desktop/background]
+picture-uri='file:///usr/share/backgrounds/techstart/wallpaper.jpg'
+picture-uri-dark='file:///usr/share/backgrounds/techstart/wallpaper.jpg'
+picture-options='zoom'
+
+[org/gnome/desktop/screensaver]
+picture-uri='file:///usr/share/backgrounds/techstart/wallpaper.jpg'
+
+[org/gnome/desktop/interface]
+color-scheme='prefer-dark'
+gtk-theme='Yaru-blue-dark'
+icon-theme='Papirus-Dark'
+
+[org/gnome/shell]
+favorite-apps=['firefox_firefox.desktop','org.gnome.Nautilus.desktop','com.microsoft.VSCode.desktop']
+
+[org/gnome/shell/extensions/dash-to-dock]
+dock-position='BOTTOM'
+dash-max-icon-size=44
+EOF
+
+   66  dconf update
+   67  cat /etc/dconf/db/local.d/00-techstart | head-5; ls /etc/dconf/db
+   68  cat /etc/dconf/db/local.d/00-techstart | head -5; ls /etc/dconf/db
+   69  cat > /etc/dconf/db/local.d/01-techstart-folders << 'EOF'
+[org/gnome/desktop/app-folders]
+folder-children=['ts-coding','ts-mobile','ts-design','ts-office','ts-guide']
+
+[org/gnome/desktop/app-folders/folders/ts-coding]
+name='TechStart: Pemrograman'
+apps=['com.microsoft.VSCode.desktop','geany.desktop','org.qt-project.qtcreator.desktop']
+
+[org/gnome/desktop/app-folders/folders/ts-mobile]
+name='TechStart: Aplikasi Mobile'
+apps=['android-studio.desktop']
+
+[org/gnome/desktop/app-folders/folders/ts-design]
+name='TechStart: Desain'
+apps=['figma-web.desktop','gimp.desktop']
+
+[org/gnome/desktop/app-folders/folders/ts-office]
+name='TechStart: Dokumen'
+apps=['libreoffice-writer.desktop','libreoffice-calc.desktop','libreoffice-impress.desktop']
+
+[org/gnome/desktop/app-folders/folders/ts-guide]
+name='TechStart: Panduan'
+apps=['techstart-guide.desktop']
+EOF
+
+   70  dconf update
+   71  ls /etc/dconf/db/local.d
+   72  sed -i 's/^NAME=.*/NAME="TechStart OS"/' /usr/lib/os-release
+   73  sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="TechStart OS 1.0"/' /usr/lib/os-release
+   74  sed -i 's/^DISTRIB_DESCRIPTION=.*/DISTRIB_DESCRIPTION="TechStart OS 1.0"/' /etc/lsb-release
+   75  echo 'TechStart OS 1.0 \n \l' > /etc/issue
+   76  echo 'TechStart OS 1.0' > /etc/issue.net
+   77  grep -E '^(NAME|PRETTY_NAME|ID)=' /usr/lib/os-release
+   78  sed -i 's/^GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="TechStart OS"/' /etc/default/grub
+   79  grep GRUB_DISTRIBUTOR /etc/default/grub
+   80  mkdir -p /etc/skel/TechStart-Guide
+   81  cat > /etc/skel/TechStart-Guide/index.html << 'EOF'
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><title>TechStart Guide</title></head>
+<body><h1>TechStart Guide</h1><p>Panduan offline TechStart OS. Isi panduan akan ditambahkan oleh kelompok.</p></body></html>
+EOF
+
+   82  cat > /usr/local/bin/techstart-guide << 'EOF'
+#!/bin/sh
+exec firefox "$HOME/TechStart-Guide/index.html"
+EOF
+
+   83  chmod +x /usr/local/bin/techstart-guide
+   84  cat > /usr/share/applications/techstart-guide.desktop << 'EOF'
+[Desktop Entry]
+Type=Application
+Name=TechStart Guide
+Comment=Panduan offline TechStart OS
+Exec=techstart-guide
+Icon=help-browser
+Categories=Education;
+Terminal=false
+EOF
+
+   85  ls /etc/skel/TechStart-Guide; ls -l /usr/local/bin/techstart-guide
+   86  cat /etc/dconf/profile/gdm
+   87  ls /usr/share/dconf/profile
+   88  cat /usr/share/dconf/profile/gdm
+   89  cat > /etc/dconf/profile/gdm << 'EOF'
+user-db:user
+system-db:gdm
+file-db:/var/lib/gdm3/greeter-dconf-defaults
+EOF
+
+   90  mkdir -p /etc/dconf/db/gdm.d
+   91  cat > /etc/dconf/db/gdm.d/01-techstart << 'EOF'
+[org/gnome/login-screen]
+banner-message-enable=true
+banner-message-text='Selamat datang di TechStart OS'
+EOF
+
+   92  dconf update
+   93  ls /etc/dconf/db
+   94  cd /root
+   95  mv 'wallpaper(1).PNG'wallpaper.png
+   96  mv 'wallpaper(1).PNG' wallpaper.png
+   97  mv 'wallpaper(2).PNG' wallpaper.png
+   98  mv 'wallpaper(3).PNG' wallpaper.png
+   99  file /root/wallpaper*.png; ls -lh /root/wallpaper*.png
+  100  cp /root/wallpaper*.png /usr/share/backgrounds/techstart/
+  101  sed -i 's/wallpaper\.jpg/wallpaper.png/g' /etc/dconf/db/local.d/00-techstart
+  102  dconf update
+  103  grep picture-uri /etc/dconf/db/local.d/00-techstart; ls /usr/share/backgrounds/techstart
+  104  cd /root
+  105  mv 'wallpaper(1).PNG' wallpaper.png
+  106  mv 'wallpaper(2).PNG' wallpaper-2.png
+  107  mv 'wallpaper(3).PNG' wallpaper-3.png
+  108  cp /root/wallpaper*.png /usr/share/backgrounds/techstart/
+  109  ls -lh /usr/share/backgrounds/techstart/
+  110  chmod 644 /usr/share/backgrounds/techstart/wallpaper*.png
+  111  mkdir -p /usr/share/gnome-background-properties
+  112  [200~cat > /usr/share/gnome-background-properties/techstart-wallpapers.xml << 'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<wallpapers>
+  <wallpaper deleted="false">
+    <name>TechStart Default</name>
+    <filename>/usr/share/backgrounds/techstart/wallpaper.png</filename>
+    <options>zoom</options>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>TechStart Wallpaper 2</name>
+    <filename>/usr/share/backgrounds/techstart/wallpaper-2.png</filename>
+    <options>zoom</options>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>TechStart Wallpaper 3</name>
+    <filename>/usr/share/backgrounds/techstart/wallpaper-3.png</filename>
+    <options>zoom</options>
+  </wallpaper>
+</wallpapers>
+EOF~
+
+
+  113  cat > /usr/share/gnome-background-properties/techstart-wallpapers.xml << 'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<wallpapers>
+  <wallpaper deleted="false">
+    <name>TechStart Default</name>
+    <filename>/usr/share/backgrounds/techstart/wallpaper.png</filename>
+    <options>zoom</options>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>TechStart Wallpaper 2</name>
+    <filename>/usr/share/backgrounds/techstart/wallpaper-2.png</filename>
+    <options>zoom</options>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>TechStart Wallpaper 3</name>
+    <filename>/usr/share/backgrounds/techstart/wallpaper-3.png</filename>
+    <options>zoom</options>
+  </wallpaper>
+</wallpapers>
+EOF
+
+  114  rm -f /root/wallpaper*.png
+  115  ls -lh /usr/share/backgrounds/techstart/ /usr/share/gnome-background-properties/techstart-wallpapers.xml
+  116  grep picture-uri /etc/dconf/db/local.d/00-techstart; ls /usr/share/backgrounds/techstart
+  117  ls -l /root/kepalaVV*
+  118  file /root/kepalaVV*
+  119  mv /root/kepalaVV.PNG /root/kepalaVV.png
+  120  ls /etc/dconf/db/gdm.d/
+  121  cat /etc/dconf/profile/gdm
+  122  mkdir -p /usr/share/techstart
+  123  cp /root/kepalaVV.png /usr/share/techstart/logo.png
+  124  cat > /etc/dconf/db/gdm.d/99-techstart << 'EOF'
+[org/gnome/login-screen]
+logo='/usr/share/techstart/logo.png'
+banner-message-enable=true
+banner-message-text='Selamat datang di TechStartOS'
+EOF
+
+  125  dconf update
+  126  mkdir -p /usr/share/icons/hicolor/256x256/apps
+  127  cp /root/kepalaVV.png /usr/share/icons/hicolor/256x256/apps/techstart-logo.png
+  128  sed -i 's/^LOGO=.*/LOGO=techstart-logo/' /usr/lib/os-release
+  129  gtk-update-icon-cache -f /usr/share/icons/hicolor
+  130  [200~ls /usr/share/plymouth/themes
+  131  ls /usr/share/plymouth/themes/spinner
+  132  ls /usr/share/plymouth/themes
+  133  ls /usr/share/plymouth/themes/spinner
+  134  ~
+  135  file /usr/share/plymouth/themes/spinner/bgrt-fallback.png /usr/share/plymouth/themes/spinner/watermark.png /root/kepalaVV.png
+  136  update-alternatives --display default.plymouth
+  137  apt install -y imagemagick
+  138  cd /usr/share/plymouth/themes/spinner
+  139  cp -n bgrt-fallback.png bgrt-fallback.png.orig
+  140  magick /root/kepalaVV.png -resize 128x128 -background none -gravity center -extent 128x128 bgrt-fallback.png
+  141  rm watermark.png
+  142  magick /root/kepalaVV.png -resize 96x96 -background none -gravity center -extent 96x96 watermark.png
+  143  file bgrt-fallback.png watermark.png
+  144  mkdir -p /usr/share/techstart
+  145  magick /root/kepalaVV.png -resize 256x256 /usr/share/techstart/logo.png
+  146  mkdir -p /etc/dconf/db/gdm.d
+  147  cat > /etc/dconf/db/gdm.d/99-techstart << 'EOF'
+[org/gnome/login-screen]
+logo='/usr/share/techstart/logo.png'
+banner-message-enable=true
+banner-message-text='Selamat datang di TechStartOS'
+EOF
+
+  148  dconf update
+  149  cat /etc/dconf/profile/gdm
+  150  update-initramfs -u
+  151  ls -l /etc/dconf/db/gdm
+  152  file /usr/share/techstart/logo.png
+  153  magick /root/kepalaVV.png -resize 256x256 -background none -gravity center -extent 256x256 /usr/share/techstart/logo.png
+  154  file /usr/share/techstart/logo.png
+  155  ls /root/*.zip
+  156  find / -name ".zip" -not -path "/proc/*" -not -path/"usr/*" 2>d/dev/null
+  157  ls /root/*.zip
+  158  ls *.zip
+  159  apt install -y unzip
+  160  mkdir -p /usr/share/techstart/website
+  161  unzip techaguide.zipm-dm/usr/share/techstart/website
+  162  unzip techaguide.zip -d /usr/share/techstart/website
+  163  ls /usr/share/techstart/website
+  164  rm techaguide.zip
+  165  cat > /usr/share/applications/techstart-web.desktop << 'EOF'
+[Desktop Entry]
+Type=Application
+Name=Website Kelompok
+Exec=firefox --new-window /usr/share/techstart/website/techaguide.html
+Icon=/usr/share/techstart/logo.png
+Categories=Network;
+EOF
+
+  166  ls /usr/share/techstart/website
+  167  which firefox
+  168  cat /usr/share/applications/techstart-web.desktop
+  169  ls -l /root/ICONS/
+  170  ls -l /root/media/BAHAN_REMASTERING_UBUNTU/ICONS
+  171  ls -l /root/ICONS
+  172  ls -la /root
+  173  cd /root
+  174  ls -lt /root | head -30
+  175  find / -xdev \( -iname 'kepalavv*' -o -iname 'logooval*' \) 2>/dev/null | head
+  176  mv /usr/share/plymouth/themes/spinner/ICONS
+  177  mv /usr/share/plymouth/themes/spinner/ICONS /root/ICONS
+  178  ls /usr/share/plymouth/spinner
+  179  ls /usr/plymouth/themes/spinner
+  180  ls  -l /root/ICONS
+  181  cp /root/ICONS/logooval.png /usr/share/techstart/logo.png
+  182  chmod 644 /usr/share/techstart/logo.png
+  183  file /usr/share/techstart/logo.png; cat /etc/dconf/db/gdm.d/01-techstart
+  184  python3 -c "import PIL;  print(PIL.__version__)"
+  185  cat > /etc/dconf/db/gdm.d/01-techstart << 'EOF'
+[org/gnome/login-screen]
+logo='/usr/share/techstart/logo.png'
+banner-message-enable=true
+banner-message-text='Selamat datang di TechStart OS'
+EOF
+
+  186  dconf upadte
+  187  dconf update
+  188  cat /etc/dconf/db/gdm.d/01-techstart
+  189  file /root/ICONs/kepalavv
+  190  file /root/ICONS/kepalavv
+  191  file /root/ICONS/kepalavv.png
+  192  python3 -c "from PIL import Image; im=Image.open('/root/ICONS/kepalavv.png'); im.thumbnail((300,300)); im.save('/root/kepalavv-boot.png')"
+  193  file /root/ICONS/kepalavv.png
+  194  file /root/kepalavv.png
+  195  file /root/kepalavv-boot.png
+  196  ls /usr/share/plymouth/themes/spinner
+  197  python3 -c "from PIL import Image; im=Image.open('/root/ICONS/kepalavv.png'); im.thumbnail((200,200)); im.save('/root/kepalavv-boot.png')"
+  198  cp -r /usr/share/plymouth/themes/spinner /usr/share/plymouth/themes/techstart
+  199  cd /usr/share/plymouth/themes/techstart && mv spinner.plymouth techstart.plymouth
+  200  sed -i 's#themes/spinner#themes/techstart#g; s/^Name=.*/Name=TechStart/' techstart.plymouth
+  201  cp /root/kepalavv-boot.png bgrt-fallback.png
+  202  echo 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR4nGNgAAIAAAUAAXpeqz8AAAAASUVORK5CYII=' | base64 -d > watermark.png
+  203  sed -i 's/^UseFirmwareBackground=.*/UseFirmwareBackground=false/' techstart.plymouth
+  204  chmod 644 *.png cd /root
+  205  chmof 644 *.png; cd /root
+  206  chmod 644 *.png; cd /root
+  207  cat /usr/share/plymouth/themes/techstart/techstart.plymouth
+  208  file /usr/share/plymouth/themes/techstart/bgrt-fallback.png /usr/share/plymouth/themes/techstart/watermark.png
+  209  file /usr/share/techstart/logo.png
+  210  update-alternatives --list default.plymouth
+  211  sed -i 's#/themes/spinner#/themes/techstart#g' /usr/share/plymouth/themes/techstart/techstart.plymouth
+  212  sed -i 's/^Name=.*/Name=TechStart/' /usr/share/plymouth/themes/techstart/techstart.plymouth
+  213  grep -nE '^(Name|ImageDir|UseFirmwareBackground)' /usr/share/plymouth/themes/techstart/techstart.plymouth
+  214  sed -i 's#^ImageDir=.*#ImageDir=/usr/share/plymouth/themes/techstart#' /usr/share/plymouth/themes/techstart/techstart.plymouth
+  215  grep -nE '^(Name=|ImageDir|UseFirmwareBackground)' /usr/share/plymouth/themes/techstart/techstart.plymouth
+  216  update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/techstart/techstart.plymouth 200
+  217  update-alternatives --set default.plymouth /usr/share/plymouth/themes/techstart/techstart.plymouth
+  218  update-initramfs -u
+  219  update-alternatives --display default.plymouth | head -3
+  220  file /usr/share/plymouth/themes/techstart/logo.png
+  221  isintramfs /boot/initrd.img-7.0.0-30-generic | grep techstart | head -5
+  222  isinitramfs /boot/initrd.img-7.0.0-30-generic | grep techstart | head -5
+  223  [200~isintramfs /boot/initrd.img-7.0.0-30-generic | grep techstart | head -5
+  224  isintramfs /boot/initrd.img-7.0.0-30-generic | grep techstart | head -5
+  225  lsinitramfs /boot/initrd.img-7.0.0-30-generic | grep techstart | head -5
+  226  cat > /root/shrink-all.py << 'EOF'
+import glob, os
+from PIL import Image
+os.makedirs('/usr/share/techstart/icons', exist_ok=True)
+im = Image.open('/root/ICONS/logooval.png')
+im.thumbnail((256, 256))
+im.save('/usr/share/techstart/logo.png')
+print('logo.png', im.size)
+for f in sorted(glob.glob('/root/ICONS/*.png')):
+    n = os.path.basename(f)
+    if n.lower() in ('kepalavv.png', 'logooval.png'):
+        continue
+    im = Image.open(f)
+    im.thumbnail((256, 256))
+    im.save('/usr/share/techstart/icons/' + n)
+    print(n, im.size)
+EOF
+
+  227  python3 /root/shrink-all.py
+  228  chmmod 644 /usr/share/techstart/logo.png /usr/share/techstart/icons/*.png
+  229  chmod 644 /usr/share/techstart/logo.png /usr/share/techstart/icons/*.png
+  230  grep -n 'ts-campus' /etc/dconf/db/local.d/01-techstart-folders
+  231  cat > /usr/share/applications/elena-web.desktop << 'EOF'
+[Desktop Entry]
+Type=Application
+Name=Elena UNNES
+Comment=E-learning UNNES
+Exec=firefox --new-window https://elena.unnes.ac.id/my
+Icon=/usr/share/techstart/icons/elenalogo.png
+Categories=Education;Network;
+Terminal=false
+EOF
+
+  232  cat > /usr/share/applications/sikadu-web.desktop << 'EOF'
+[Desktop Entry]
+Type=Application
+Name=Sikadu UNNES
+Comment=Sistem Informasi Akademik UNNES
+Exec=firefox --new-window https://apps.unnes.ac.id/23
+Icon=/usr/share/techstart/icons/dulogo.png
+Categories=Education;Network;
+Terminal=false
+EOF
+
+  233  grep folder-children /etc/dconf/local.d/01-techstart-folders
+  234  grep folder-children /etc/dconf/db/local.d/01-techstart-folders
+  235  sed -i "s/'ts-guide'\]/'ts-guide','ts-campus']/" /etc/dconf/db/local.d/01-techstart-folders
+  236  cat >> /etc/dconf/db/local.d/01-techstart-folders << 'EOF'
+
+[org/gnome/desktop/app-folders/folders/ts-campus]
+name='TechStart: Kampus'
+apps=['elena-web.desktop','sikadu-web.desktop']
+EOF
+
+  237  update-desktop-database /usr/share/apllications
+  238  update-desktop-database /usr/share/applications
+  239  dconf update
+  240  grep -n 'ts-campus' /etc/dconf/db/local.d/01-techstart-folders
+  241  cat > /root/apply-icons.py << 'EOF'
+import os, re
+ICON = '/usr/share/techstart/icons/'
+SRCS = ['/usr/share/applications/', '/var/lib/snapd/desktop/applications/']
+DEST = '/usr/local/share/applications/'
+MAP = {
+    'com.microsoft.VSCode.desktop': 'vsclogo.png',
+    'geany.desktop': 'geanylogo.png',
+    'org.qt-project.qtcreator.desktop': 'qtlogo.png',
+    'android-studio.desktop': 'aslogo.png',
+    'figma-web.desktop': 'figmalogo.png',
+    'firefox_firefox.desktop': 'foxlogo.png',
+    'gimp.desktop': 'gimplogo.png',
+    'libreoffice-writer.desktop': 'librelogo.png',
+    'libreoffice-calc.desktop': 'librelogo.png',
+    'libreoffice-impress.desktop': 'librelogo.png',
+    'techstart-guide.desktop': 'tglogo.png',
+}
+os.makedirs(DEST, exist_ok=True)
+for desk, icon in MAP.items():
+    src = None
+    for d in SRCS:
+        if os.path.exists(d + desk):
+            src = d + desk
+            break
+    if src is None:
+        print('TIDAK ADA:', desk)
+        continue
+    if not os.path.exists(ICON + icon):
+        print('IKON TIDAK ADA:', icon)
+        continue
+    text = open(src, encoding='utf-8').read()
+    new, n = re.subn(r'(?m)^Icon=.*$', 'Icon=' + ICON + icon, text, count=1)
+    if n == 0:
+        new = text.replace('[Desktop Entry]\n', '[Desktop Entry]\nIcon=' + ICON + icon + '\n', 1)
+    open(DEST + desk, 'w', encoding='utf-8').write(new)
+    print('OK:', desk, '->', icon)
+EOF
+
+  242  python3 /root/apply-icons.py
+  243  update-desktop-database /usr/share/applications
+  244  dpkg -l | grep -E '(ubuntu|kubuntu|xubuntu|lubuntu|ubuntu-mate|ubuntu-budgie|ubuntucinnamon)-desktop' | awk '{print $2}'
+  245  grep -E '^(PRETTY_NAME|VERSION)=' /etc/os-release
+  246  dpkg -l | grep -E '^ii +(gnome-shell|plasma-desktop|xfce4-session|lxqt-session|mate-session-manager|budgie-desktop|cinnamon|ubuntu-server|ubuntu-minimal) ' | awk '{print $2}'
+  247  la -la /usr/share/backgrounds/techstart
+  248  ls /root/wallpaper*.png /usr/share/backgrounds/techstart/wallpaper*.png
+  249  python3 - <<'EOF'
+from PIL import Image, ImageFilter
+d='/usr/share/backgrounds/techstart/'
+names=['wallpaper','wallpaper-2','wallpaper-3']
+for n in names:
+    Image.open(d+n+'.png').convert('RGB').filter(ImageFilter.GaussianBlur(40)).save(d+n+'-blur.png')
+def tr(a,b):
+    return f'  <transition><duration>5.0</duration><from>{d}{a}.png</from><to>{d}{b}.png</to></transition>\n'
+x='<background>\n  <starttime><year>2026</year><month>1</month><day>1</day><hour>0</hour><minute>0</minute><second>0</second></starttime>\n'
+for i,n in enumerate(names):
+    nx=names[(i+1)%3]
+    x+=f'  <static><duration>285.0</duration><file>{d}{n}.png</file></static>\n'
+    x+=tr(n,n+'-blur')+tr(n+'-blur',nx+'-blur')+tr(nx+'-blur',nx)
+x+='</background>\n'
+open(d+'techstart.xml','w').write(x)
+EOF
+
+  250  ls /usr/share/backgrounds/techstart/
+  251  cat > /usr/share/gnome-background-properties/techstart.xml <<'EOF'
+<?xml version="1.0"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<wallpapers>
+  <wallpaper deleted="false">
+    <name>TechStart</name>
+    <filename>/usr/share/backgrounds/techstart/techstart.xml</filename>
+    <options>zoom</options>
+    <pcolor>#4B0072</pcolor>
+    <scolor>#FF2E93</scolor>
+    <shade_type>solid</shade_type>
+  </wallpaper>
+</wallpapers>
+EOF
+
+  252  cat > /usr/share/glib-2.0/schemas/90_techstart.gschema.override <<'EOF'
+[org.gnome.desktop.background]
+picture-uri='file:///usr/share/backgrounds/techstart/techstart.xml'
+picture-uri-dark='file:///usr/share/backgrounds/techstart/techstart.xml'
+picture-options='zoom'
+
+[org.gnome.desktop.interface]
+color-scheme='prefer-dark'
+accent-color='purple'
+
+[org.gnome.shell.extensions.dash-to-dock]
+transparency-mode='FIXED'
+background-opacity=0.4
+custom-background-color=true
+background-color='#4B0072'
+EOF
+
+  253  glib-compile-schemas /usr/share/glib-2.0/schemas/
+  254  cat /usr/share/gnome-background-properties/techstart.xml | head -5
+  255  grep -c . /usr/share/glib-2.0/schemas/90_techstart.gschema.override
+  256  apt update && apt install -y gnome-shell-extension-blur-my-shell
+  257  apt install -y gnome-shell-extension-blur-my-shell
+  258  apt-cache search gnome-shell-extension | grep -iE 'blur|dash-to-dock|dock'
+  259  dpkg -l | grep -E 'gnome-shell|ubuntu-dock' | awk '{print $2, $3}'
+  260  ls /usr/share/gnome-shell/extensions/
+  261  glib-compile-schemas --strict /usr/share/glib-2.0/schemas/ ; echo "kode: $?"
+  262  history -a
+  263  history > /root/riwayat-cubic.txt
