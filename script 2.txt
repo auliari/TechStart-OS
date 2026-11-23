@@ -1,0 +1,419 @@
+     1	dpkg -l | grep -E '^ii +(dracut|initramfs-tools)' | awk '{print $2, $3}'
+     2	ls -la /boot/ | grep initrd
+     3	lsinitrd /boot/initrd.img-7.0.0-30-generic 2>&1 | head -20
+     4	ls /usr/lib/dracut/modules.d/ | grep -iE 'casper|live|squash|dmsquash'
+     5	install -d -m 0755 /etc/apt/keyringswget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O /etc/apt/keyrings/packages.mozilla.org.asccat > /etc/apt/sources.list.d/mozilla.sources << 'EOF'Types: debURIs: https://packages.mozilla.org/aptSuites: mozillaComponents: mainSigned-By: /etc/apt/keyrings/packages.mozilla.org.ascEOFcat > /etc/apt/preferences.d/mozilla << 'EOF'Package: firefox*Pin: origin packages.mozilla.orgPin-Priority: 1001Package: firefox*Pin: release o=UbuntuPin-Priority: -1EOFapt-get updateapt-get install -y --allow-downgrades firefox
+     6	install -d -m 0755 /etc/apt/keyrings
+     7	wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O /etc/apt/keyrings/packages.mozilla.org.asc
+     8	cat > /etc/apt/sources.list.d/mozilla.sources << 'EOF'
+     9	Types: deb
+    10	URIs: https://packages.mozilla.org/apt
+    11	Suites: mozilla
+    12	Components: main
+    13	Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc
+    14	EOF
+    15	
+    16	cat > /etc/apt/preferences.d/mozilla << 'EOF'
+    17	Package: firefox*
+    18	Pin: origin packages.mozilla.org
+    19	Pin-Priority: 1001
+    20	Package: firefox*
+    21	Pin: release o=Ubuntu
+    22	Pin-Priority: -1
+    23	EOF
+    24	
+    25	apt-get update
+    26	apt-get install -y --allow-downgrades firefox
+    27	firefox --version
+    28	ls /usr/share/applications | grep -i firefox
+    29	sed -i 's/firefox_firefox.desktop/firefox.desktop' /etc/dconf/db/local.d/00-techstart
+    30	apt-get update 2>&1 | grep -i mozilla
+    31	apt
+    32	ls -l /etc/apt/keyrings/packages.mozilla.org.asc
+    33	wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O /etc/apt/keyrings/packages.mozilla.org.asc
+    34	ls -l /etc/apt/keyrings/packages.mozilla.org.asc
+    35	apt-get update 2>&1 | grep -i mozilla
+    36	apt-get install -y --allow-downgrades firefox
+    37	firefox --version
+    38	wget -O /root/firefox.tar.xz "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
+    39	ls -lh /root/firefox.tar.xz
+    40	tar -xf /root/firefox.tar.xz -C /opt
+    41	ln -sf /opt/firefox/firefox /usr/local/bin/firefox
+    42	rm /root/firefox.tar.xz
+    43	/opt/firefox/firefox --version
+    44	nano /usr/share/applications/firefox.desktop
+    45	sed -i 's/firefox_firefox.desktop/firefox.desktop/' /etc/dconf/db/local.d/00-techstart
+    46	grep favorite-apps /etc/dconf/db/local.d/00-techstart
+    47	update-desktop-database /usr/share/applications
+    48	sed -i 's/firefox_firefox.desktop/firefox.desktop/' /etc/dconf/db/local.d/00-techstart
+    49	sed -i "s#techstart/wallpaper.png#techstart/techstart.xml#g" /etc/dconf/db/local.d/00-techstart
+    50	sed -i 's/285.0/25.0/g; s/>5.0</>1.0</g' /usr/share/backgrounds/techstart/techstart.xml
+    51	dconf update
+    52	grep -E 'favorite-apps|picture-uri' /etc/dconf/db/local.d/00-techstart
+    53	ls -R /usr/share/techstart/website | head -20
+    54	ls /usr/share/techstart/icons/
+    55	grep -H '^Exec=' /usr/share/applications/techstart-*.desktop
+    56	grep -E 'picture-uri' /etc/dconf/db/local.d/00-techstart
+    57	ls /usr/share/backgrounds/techstart/
+    58	grep -o '<duration>[0,9.]*' /usr/share/backgrounds/techstart/techstart.xml | sort | uniq -c
+    59	grep -o '<duration>[0-9.]*' /usr/share/backgrounds/techstart/techstart.xml | sort | uniq -c
+    60	ls -R /usr/share/techstart/website | head -20
+    61	ls /usr/share/techstart/icons/
+    62	grep -E 'favorite-apps|picture-uri' /etc/dconf/db/local.d/00-techstart
+    63	dconf update
+    64	ls -R /usr/share/techstart/website | head -20
+    65	ls /usr/share/techstart/icons/
+    66	rm -rf /etc/skel/TechStart-GUide /etc/skel/TechStart-Web /usr/local/bin/techstart-guide /usr/local/bin/techstart-web
+    67	rm -f /usr/share/applications/techstart-web.desktop
+    68	cat > /usr/share/applications/techstart-guide.desktop << 'EOF'
+    69	[Desktop Entry]
+    70	Type=Application
+    71	Name=TechStart Guide
+    72	Exec=firefox --new-window file:///usr/share/techstart/website/techaguide.html
+    73	Icon=/usr/share/techstart/icons/tglogo.png
+    74	Categories=Education;
+    75	Terminal=false
+    76	EOF
+    77	
+    78	chmod -R a+rX /usr/share/techstart/website
+    79	ls -lh /boot/initrd.img-7.0.0-30-generic
+    80	ls -l --time-style=long-iso /boot/initrd.img-7.0.0-30-generic
+    81	ls -l /root/apply-branding.py
+    82	ls /usr/share/techstart/icons/
+    83	python3 /root/apply-branding.py
+    84	update-desktop-database /usr/local/share/applications
+    85	ls -R /usr/share/techstart/website | head -20
+    86	ls /usr/share/techstart/icons/
+    87	ls /usr/share/applications | grep -i techstart
+    88	ls /etc/skel
+    89	grep -H -E '^(Name|Exec|Icon)=' /usr/share/applications/techstart-*.desktop
+    90	grep -H -E '^(Name|Exec|Icon)=' /usr/local/share/applications/techstart-*.desktop
+    91	ls /usr/share/techstart/icons/ | grep -iE 'tglogo|logooval|guide'
+    92	ls /usr/share/techstart/website
+    93	rm -f /usr/share/applications/techstart-web.desktop /usr/local/share/applications/techstart-web.desktop
+    94	rm -rf /etc/skel/TechStart-Guide /etc/skel/TechStart-Web
+    95	rm -f /usr/local/bin/techstart-guide /usr/local/bin/techstart-web
+    96	sed -i 's/^Comment=.*/Comment=Website buatan kelompok TechStartOS/' /usr/share/applications/techstart-guide.desktop
+    97	sed -i 's/^Comment=.*/Comment=Website buatan kelompok TechStartOS/' /usr/local/share/applications/techstart-guide.desktop
+    98	grep -H -E '^(Name|Comment|Exec|Icon)=' /usr/share/applications/techstart-guide.desktop /usr/local/share/applications/techstart-guide.desktop
+    99	sed -i 's/^Name=.*/Name=TechaGuide/' /usr/share/applications/techstart-guide.desktop
+   100	sed -i 's/^Name=.*/Name=TechaGuide/' /usr/local/share/applications/techstart-guide.desktop
+   101	sed -i '/^Name=/a Comment=Website buatan kelompok TechStartOS' /usr/share/applications/techstart-guide.desktop
+   102	sed -i '/^Name=/a Comment=Website buatan kelompok TechStartOS' /usr/local/share/applications/techstart-guide.desktop
+   103	grep -H -E '^(Name|Comment|Exec|Icon)=' /usr/share/applications/techstart-guide.desktop /usr/local/share/applications/techstart-guide.desktop
+   104	grep -A2 ts-guide /etc/dconf/db/local.d/01-techstart-folders
+   105	sed -i "s/'ts-guide',//" /etc/dconf/db/local.d/01-techstart-folders
+   106	grep folder-children /etc/dconf/db/local.d/01-techstart-folders
+   107	dconf update
+   108	update-desktop-database /usr/share/applications
+   109	grep favorite-apps /etc/dconf/db/local.d/00-techstart
+   110	sed -i "s/'com.microsoft.VSCode.desktop'\]/'com.microsoft.VSCode.desktop','techstart-guide.desktop']/" /etc/dconf/db/local.d/00-techstart
+   111	grep favorite-apps /etc/dconf/db/local.d/00-techstart
+   112	dconf update
+   113	python3 /root/apply-branding.py
+   114	update-desktop-database /usr/local/share/applications
+   115	rm -f /usr/share/applications/techaflu.desktop /usr/local/share/applications/techaflu.desktop
+   116	rm -rf /opt/flutter /etc/profile.d/flutter.sh
+   117	rm -rf /opt/android-studio /root/android-studio*
+   118	rm -f /usr/share/applications/android-studio.desktop /usr/local/share/applications/android-studio.desktop
+   119	sed -i "s/, 'ts-mobile'//g; s/'ts-mobile', //g" /etc/dconf/db/local.d/01-techstart-folders
+   120	cat /etc/dconf/db/local.d/01-techstart-folders
+   121	rm -rf /opt/android-studio /usr/local/android-studio /root/android-studio*
+   122	rm -f /usr/share/applications/android-studio.desktop /usr/local/share/applications/android-studio.desktop
+   123	ls -d /opt/android-studio /usr/share/applications/android-studio.desktop /usr/local/share/applications/android-studio.desktop 2>/dev/null
+   124	cat > /etc/dconf/db/local.d/01-techstart-folders << 'EOF'
+   125	[org/gnome/desktop/app-folders]
+   126	folder-children=['ts-coding', 'ts-design', 'ts-office', 'ts-campus']
+   127	
+   128	[org/gnome/desktop/app-folders/folders/ts-coding]
+   129	name='TechStart: Pemrograman'
+   130	apps=['com.microsoft.VSCode.desktop', 'geany.desktop', 'org.qt-project.qtcreator.desktop']
+   131	
+   132	[org/gnome/desktop/app-folders/folders/ts-design]
+   133	name='TechStart: Desain'
+   134	apps=['figma-web.desktop', 'gimp.desktop']
+   135	
+   136	[org/gnome/desktop/app-folders/folders/ts-office]
+   137	name='TechStart: Dokumen'
+   138	apps=['libreoffice-writer.desktop', 'libreoffice-calc.desktop', 'libreoffice-impress.desktop']
+   139	
+   140	[org/gnome/desktop/app-folders/folders/ts-campus]
+   141	name='TechStart: Kampus'
+   142	apps=['elena-web.desktop', 'sikadu-web.desktop']
+   143	EOF
+   144	
+   145	rm -f /etc/dconf/db/local.d/05-techstart-layout
+   146	dconf update
+   147	cat /etc/dconf/db/local.d/01-techstart-folders
+   148	sed -i 's/^NAME=.*/NAME="TechStartOS"/' /usr/lib/os-release
+   149	sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="TechStartOS 1.0"/' /usr/lib/os-release
+   150	sed -i 's/^VERSION=.*/VERSION="1.0"/' /usr/lib/os-release
+   151	sed -i 's/^DISTRIB_DESCRIPTION=.*/DISTRIB_DESCRIPTION="TechStartOS 1.0"/' /etc/lsb-release
+   152	printf 'TechStartOS 1.0 \\n \\l\n' > /etc/issue
+   153	echo 'TechStartOS 1.0' > /etc/issue.net
+   154	sed -i 's/^GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="TechStartOS"/' /etc/default/grub
+   155	grep -E '^(NAME|PRETTY_NAME|VERSION|ID)=' /usr/lib/os-release
+   156	cat > /usr/local/bin/techstart-branding << 'EOF'
+   157	#!/bin/sh
+   158	sed -i 's/^NAME=.*/NAME="TechStartOS"/' /usr/lib/os-release
+   159	sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="TechStartOS 1.0"/' /usr/lib/os-release
+   160	sed -i 's/^VERSION=.*/VERSION="1.0"/' /usr/lib/os-release
+   161	sed -i 's/^DISTRIB_DESCRIPTION=.*/DISTRIB_DESCRIPTION="TechStartOS 1.0"/' /etc/lsb-release
+   162	exit 0
+   163	EOF
+   164	
+   165	chmod +x /usr/local/bin/techstart-branding
+   166	cat > /etc/apt/apt.conf.d/99-techstart-branding << 'EOF'
+   167	DPkg::Post-Invoke { "/usr/local/bin/techstart-branding"; };
+   168	EOF
+   169	
+   170	grep -rn 'Ubuntu' /etc/update-motd.d 2>/dev/null | head
+   171	grep -i 'Name=Ubuntu' /usr/share/wayland-sessions/*.desktop /usr/share/xsessions/*.desktop 2>/dev/null
+   172	grep -h '^Name=.*Ubuntu' /usr/share/applications/*.desktop | head
+   173	sed -i 's/^Name=Ubuntu/Name=TechStartOS/' /usr/share/wayland-sessions/ubuntu.desktop
+   174	grep -l '^Name=Ubuntu Desktop' /usr/share/applications/*.desktop
+   175	ls -l /root/ICONS/kepalavv.png
+   176	python3 -c "from PIL import Image; im = Image.open('/root/ICONS/kepalavv.png'); im.thumbnail((200,200)); im.save('/root/kepalavv-boot.png')"
+   177	file /root/kepalavv-boot.png
+   178	cp /root/kepalavv-boot.png /usr/share/plymouth/themes/techstart/bgrt-fallback.png
+   179	chmod 644 /usr/share/plymouth/themes/techstart/*.png
+   180	cat > /etc/plymouth/plymouthd.conf << 'EOF'
+   181	[Daemon]
+   182	Theme=techstart
+   183	EOF
+   184	
+   185	update-alternatives --set default.plymouth /usr/share/plymouth/themes/techstart/techstart.plymouth
+   186	update-initramfs -u -k all
+   187	update-alternatives --display default.plymouth | head -3
+   188	for f in /boot/initrd.img-*; do echo "$f"; lsinitramfs "$f" | grep -ci techstart; done
+   189	grep CMDLINE_LINUX_DEFAULT /etc/default/grub
+   190	cat > /etc/dconf/db/local.d/10-techstart-dock << 'EOF'
+   191	[org/gnome/shell/extensions/dash-to-dock]
+   192	show-apps-icon-file='/usr/share/techstart/logo.png'
+   193	EOF
+   194	
+   195	dconf update
+   196	ls -l /usr/share/techstart/logo.png
+   197	cat > /etc/dconf/db/local.d/05-techstart-layout << 'EOF'
+   198	[org/gnome/shell]
+   199	app-picker-layout=[{'ts-coding': <{'position': <0>}>, 'ts-design': <{'position': <1>}>, 'ts-office': <{'position': <2>}>, 'ts-campus': <{'position': <3>}>}]
+   200	EOF
+   201	
+   202	dconf update
+   203	history | tail -n 30
+   204	ls -la /etc/dconf/db/local.d/ /etc/apt/sources.list.d/
+   205	install -d -m 0755 /etc/apt/keyrings
+   206	wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O /etc/apt/keyrings/packages.mozilla.org.asc
+   207	cat > /etc/apt/sources.list.d/mozilla.sources << 'EOF'
+   208	Types: deb
+   209	URIs: https://packages.mozilla.org/apt
+   210	Suites: mozilla
+   211	Components: main
+   212	Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc
+   213	EOF
+   214	
+   215	cat > /etc/apt/preferences.d/mozilla << 'EOF'
+   216	Package: firefox*
+   217	Pin: origin packages.mozilla.org
+   218	Pin-Priority: 1001
+   219	
+   220	Package: firefox*
+   221	Pin: release o=Ubuntu
+   222	Pin-Priority: -1
+   223	EOF
+   224	
+   225	apt-get update
+   226	apt-get install -y --allow-downgrades firefox
+   227	cp /usr/share/applications/firefox.desktop /usr/local/share/applications/firefox.desktop
+   228	sed -i '/^Name\[/d; s/^Name=.*/Name=TechaFox/' /usr/local/share/applications/firefox.desktop
+   229	[ -f /usr/share/techstart/icons/foxlogo.png ] && sed -i 's|^Icon=.*|Icon=/usr/share/techstart/icons/foxlogo.png|' /usr/local/share/applications/firefox.desktop
+   230	update-desktop-database /usr/local/share/applications
+   231	sed -i 's/firefox_firefox.desktop/firefox.desktop/g' /etc/dconf/db/local.d/* 2>/dev/null
+   232	firefox --version
+   233	git clone https://github.com/TheRealSourcer/widgets.git /root/widgets
+   234	UUID=$(python3 -c "import json; print(json.load(open('/root/widgets/metadata.json'))['uuid'])")
+   235	echo "UUID Ekstensi: $UUID"
+   236	mkdir -p /usr/share/gnome-shell/extensions/"$UUID"
+   237	cp -r /root/widgets/* /usr/share/gnome-shell/extensions/"$UUID"/
+   238	if [ -d /root/widgets/schemas ]; then     cp -r /root/widgets/schemas/*.xml /usr/share/glib-2.0/schemas/ 2>/dev/null || true;     glib-compile-schemas /usr/share/gnome-shell/extensions/"$UUID"/schemas/;     glib-compile-schemas /usr/share/glib-2.0/schemas/; fi
+   239	chmod -R a+rX /usr/share/gnome-shell/extensions/"$UUID"
+   240	grep -rnE "^Name=Techa|^Icon=" /usr/local/share/applications/ /usr/share/applications/*techa* 2>/dev/null
+   241	firefox --version
+   242	grep -rn "Name=TechaFox" /usr/local/share/applications/ /usr/share/applications/ 2>/dev/null
+   243	git clone https://github.com/TheRealSourcer/widgets.git /root/widgets
+   244	UUID=$(python3 -c "import json; print(json.load(open('/root/widgets/metadata.json'))['uuid'])")
+   245	mkdir -p /usr/share/gnome-shell/extensions/"$UUID"
+   246	cp -r /root/widgets/* /usr/share/gnome-shell/extensions/"$UUID"/
+   247	if [ -d /root/widgets/schemas ]; then     cp -r /root/widgets/schemas/*.xml /usr/share/glib-2.0/schemas/ 2>/dev/null || true;     glib-compile-schemas /usr/share/gnome-shell/extensions/"$UUID"/schemas/;     glib-compile-schemas /usr/share/glib-2.0/schemas/; fi
+   248	chmod -R a+rX /usr/share/gnome-shell/extensions/"$UUID"
+   249	cat > /root/setup-techstart-dconf.py << 'EOF'
+   250	import os, glob, json, ast, subprocess
+   251	
+   252	folders = {
+   253	    'ts-coding': ('TechStart: Pemrograman', ['code', 'vscode', 'techacode', 'geany', 'techany', 'qtcreator', 'techaqt']),
+   254	    'ts-design': ('TechStart: Desain', ['figma', 'techama', 'gimp', 'techagimp']),
+   255	    'ts-office': ('TechStart: Dokumen', ['libreoffice', 'techafice']),
+   256	    'ts-campus': ('TechStart: Kampus', ['sikadu', 'techadu', 'elena', 'techalena']),
+   257	}
+   258	
+   259	matched = {k: set() for k in folders}
+   260	for folder_path in ['/usr/local/share/applications', '/usr/share/applications']:
+   261	    for filepath in glob.glob(os.path.join(folder_path, '*.desktop')):
+   262	        fname = os.path.basename(filepath)
+   263	        try:
+   264	            content = open(filepath, errors='ignore').read().lower()
+   265	        except Exception:
+   266	            content = ''
+   267	        if 'nodisplay=true' in content:
+   268	            continue
+   269	        target_str = fname.lower() + "\n" + content
+   270	        for key, (_, keywords) in folders.items():
+   271	            if any(kw in target_str for kw in keywords):
+   272	                matched[key].add(fname)
+   273	
+   274	lines = [
+   275	    "[org/gnome/desktop/app-folders]",
+   276	    "folder-children=['ts-coding', 'ts-design', 'ts-office', 'ts-campus']",
+   277	    ""
+   278	]
+   279	for key, (title, _) in folders.items():
+   280	    app_list = sorted(matched[key])
+   281	    print(f"{title} -> {app_list}")
+   282	    lines += [
+   283	        f"[org/gnome/desktop/app-folders/folders/{key}]",
+   284	        f"name='{title}'",
+   285	        f"apps={repr(app_list)}",
+   286	        ""
+   287	    ]
+   288	
+   289	open('/etc/dconf/db/local.d/07-techstart-folders', 'w').write("\n".join(lines))
+   290	
+   291	uuid = json.load(open('/root/widgets/metadata.json'))['uuid']
+   292	env = dict(os.environ, GSETTINGS_BACKEND='memory')
+   293	out = subprocess.run(
+   294	    ['gsettings', 'get', 'org.gnome.shell', 'enabled-extensions'],
+   295	    capture_output=True, text=True, env=env
+   296	).stdout.strip()
+   297	if out.startswith('@as'):
+   298	    out = out[3:].strip()
+   299	cur = ast.literal_eval(out) if out else []
+   300	if uuid not in cur:
+   301	    cur.append(uuid)
+   302	open('/etc/dconf/db/local.d/08-techstart-extensions', 'w').write(
+   303	    "[org/gnome/shell]\nenabled-extensions=" + repr(cur) + "\n"
+   304	)
+   305	print("Ekstensi aktif:", cur)
+   306	EOF
+   307	
+   308	python3 /root/setup-techstart-dconf.py
+   309	dconf update
+   310	bash << 'AUDIT_EOF'
+   311	echo "=== 1. IDENTITAS OS & BOOT LOGO (PLYMOUTH) ==="
+   312	grep -E "^(NAME|PRETTY_NAME)=" /etc/os-release
+   313	find /usr/share/plymouth -iname "*kepalavv*" 2>/dev/null | grep . || echo "[CEK] kepalavv.png tidak ditemukan di /usr/share/plymouth"
+   314	
+   315	echo -e "\n=== 2. WALLPAPER & FILE GAMBAR ==="
+   316	grep -rnE "picture-uri" /etc/dconf/db/local.d/ /usr/share/glib-2.0/schemas/*.override 2>/dev/null || echo "[CEK] Konfigurasi picture-uri belum ditemukan di dconf/gschema"
+   317	for uri in $(grep -rhoE "file://[^'\"]+" /etc/dconf/db/local.d/ /usr/share/glib-2.0/schemas/*.override 2>/dev/null | sort -u); do
+   318	    fpath="${uri#file://}"
+   319	    [ -f "$fpath" ] && echo "[OK] File wallpaper ada: $fpath" || echo "[GAGAL] File wallpaper hilang: $fpath"
+   320	done
+   321	ls -lh /usr/share/techstart/ /usr/share/backgrounds/*tech* 2>/dev/null || true
+   322	
+   323	echo -e "\n=== 3. APLIKASI YANG DIHAPUS (FLUTTER, ANDROID STUDIO & BLOATWARE) ==="
+   324	for item in /opt/flutter /opt/android-studio /usr/local/flutter /usr/local/android-studio /usr/bin/flutter; do
+   325	    [ -e "$item" ] && echo "[BELUM BERSIH] Masih ada: $item" || echo "[OK] Terhapus: $item"
+   326	done
+   327	LEFTOVER_DESKTOP=$(grep -rliE "flutter|android.studio|techaflu|techastudio" /usr/local/share/applications/ /usr/share/applications/ 2>/dev/null)
+   328	[ -n "$LEFTOVER_DESKTOP" ] && echo -e "[BELUM BERSIH] Sisa file .desktop:\n$LEFTOVER_DESKTOP" || echo "[OK] Tidak ada sisa .desktop Flutter / Android Studio"
+   329	grep -rq "Aplikasi Mobile" /etc/dconf/db/local.d/ 2>/dev/null && echo "[BELUM BERSIH] Folder 'Aplikasi Mobile' masih tercatat di dconf" || echo "[OK] Folder 'Aplikasi Mobile' sudah hilang dari dconf"
+   330	echo "--- Status paket bawaan Ubuntu (yang masih terpasang akan tampil di bawah) ---"
+   331	dpkg-query -W -f='${Package} (${Status})\n' aisleriot gnome-mahjongg gnome-mines gnome-sudoku thunderbird rhythmbox transmission-gtk 2>/dev/null | grep "install ok installed" || echo "[OK] Paket game/bloatware standar sudah bersih"
+   332	
+   333	echo -e "\n=== 4. FIREFOX .DEB & TECHAFOX ==="
+   334	firefox --version 2>/dev/null || echo "[GAGAL] Firefox belum terpasang"
+   335	[ -f /etc/apt/preferences.d/mozilla ] && echo "[OK] Pinning Mozilla .deb aktif" || echo "[CEK] Pinning Mozilla belum ada"
+   336	grep -m1 "^Name=" /usr/local/share/applications/firefox.desktop 2>/dev/null || echo "[CEK] firefox.desktop kustom belum ada"
+   337	
+   338	echo -e "\n=== 5. DAFTAR APLIKASI KUSTOM (TECHA*) ==="
+   339	grep -H "^Name=" /usr/local/share/applications/*.desktop 2>/dev/null | sed "s|/usr/local/share/applications/||"
+   340	
+   341	echo -e "\n=== 6. DCONF (DOCK, FOLDER, WIDGETS) ==="
+   342	ls -la /etc/dconf/db/local.d/
+   343	[ -f /etc/dconf/db/local ] && echo "[OK] Database dconf terkompilasi (/etc/dconf/db/local)" || echo "[GAGAL] Jalankan dconf update!"
+   344	cat /etc/dconf/db/local.d/07-techstart-folders 2>/dev/null || echo "[GAGAL] 07-techstart-folders belum dibuat"
+   345	cat /etc/dconf/db/local.d/08-techstart-extensions 2>/dev/null || echo "[GAGAL] 08-techstart-extensions belum dibuat"
+   346	ls -1 /usr/share/gnome-shell/extensions/
+   347	AUDIT_EOF
+   348	
+   349	find /usr /root /opt /etc /tmp -iname "*kepalavv*" 2>/dev/null || echo "File kepalavv.png belum ada di sistem Cubic"
+   350	ls -la /usr/share/plymouth/ubuntu-logo.png /usr/share/plymouth/themes/spinner/watermark.png 2>/dev/null
+   351	rm -f /root/kepalaVV.png
+   352	file /root/ICONS/kepalavv.png
+   353	cp /root/ICONS/kepalavv.png /usr/share/plymouth/themes/spinner/watermark.png
+   354	[ -f /usr/share/plymouth/ubuntu-logo.png ] && cp /root/ICONS/kepalavv.png /usr/share/plymouth/ubuntu-logo.png
+   355	update-initramfs -u -k all
+   356	bash << 'AUDIT_PART2'
+   357	echo "=== CEK REFERENSI /root/ ==="
+   358	grep -rn "/root/" /usr/local/share/applications/ /etc/dconf/db/local.d/ 2>/dev/null || echo "[OK] Tidak ada file .desktop atau dconf yang mengarah ke /root/"
+   359	
+   360	echo -e "\n=== 2. WALLPAPER & FILE GAMBAR ==="
+   361	grep -rnE "picture-uri" /etc/dconf/db/local.d/ /usr/share/glib-2.0/schemas/*.override 2>/dev/null || echo "[CEK] Konfigurasi picture-uri belum ditemukan di dconf/gschema"
+   362	for uri in $(grep -rhoE "file://[^'\"]+" /etc/dconf/db/local.d/ /usr/share/glib-2.0/schemas/*.override 2>/dev/null | sort -u); do
+   363	    fpath="${uri#file://}"
+   364	    [ -f "$fpath" ] && echo "[OK] File wallpaper ada: $fpath" || echo "[GAGAL] File wallpaper hilang: $fpath"
+   365	done
+   366	
+   367	echo -e "\n=== 3. APLIKASI YANG DIHAPUS ==="
+   368	for item in /opt/flutter /opt/android-studio /usr/local/flutter /usr/local/android-studio /usr/bin/flutter; do
+   369	    [ -e "$item" ] && echo "[BELUM BERSIH] Masih ada: $item" || echo "[OK] Terhapus: $item"
+   370	done
+   371	LEFTOVER_DESKTOP=$(grep -rliE "flutter|android.studio|techaflu|techastudio" /usr/local/share/applications/ /usr/share/applications/ 2>/dev/null)
+   372	[ -n "$LEFTOVER_DESKTOP" ] && echo -e "[BELUM BERSIH] Sisa .desktop:\n$LEFTOVER_DESKTOP" || echo "[OK] Tidak ada sisa .desktop Flutter / Android Studio"
+   373	grep -rq "Aplikasi Mobile" /etc/dconf/db/local.d/ 2>/dev/null && echo "[BELUM BERSIH] Folder 'Aplikasi Mobile' masih ada di dconf" || echo "[OK] Folder 'Aplikasi Mobile' sudah bersih"
+   374	dpkg-query -W -f='${Package} (${Status})\n' aisleriot gnome-mahjongg gnome-mines gnome-sudoku thunderbird rhythmbox transmission-gtk 2>/dev/null | grep "install ok installed" || echo "[OK] Paket game/bloatware bawaan sudah bersih"
+   375	
+   376	echo -e "\n=== 4. FIREFOX .DEB & TECHAFOX ==="
+   377	firefox --version 2>/dev/null || echo "[GAGAL] Firefox belum terpasang"
+   378	[ -f /etc/apt/preferences.d/mozilla ] && echo "[OK] Pinning Mozilla .deb aktif" || echo "[CEK] Pinning Mozilla belum ada"
+   379	grep -m1 "^Name=" /usr/local/share/applications/firefox.desktop 2>/dev/null || echo "[CEK] firefox.desktop kustom belum ada"
+   380	
+   381	echo -e "\n=== 5. DAFTAR APLIKASI KUSTOM (TECHA*) ==="
+   382	grep -H "^Name=" /usr/local/share/applications/*.desktop 2>/dev/null | sed "s|/usr/local/share/applications/||"
+   383	
+   384	echo -e "\n=== 6. DCONF & EXTENSIONS ==="
+   385	ls -1 /etc/dconf/db/local.d/
+   386	[ -f /etc/dconf/db/local ] && echo "[OK] Database dconf terkompilasi" || echo "[GAGAL] Jalankan dconf update!"
+   387	cat /etc/dconf/db/local.d/07-techstart-folders 2>/dev/null || echo "[GAGAL] 07-techstart-folders belum ada"
+   388	cat /etc/dconf/db/local.d/08-techstart-extensions 2>/dev/null || echo "[GAGAL] 08-techstart-extensions belum ada"
+   389	ls -1 /usr/share/gnome-shell/extensions/
+   390	AUDIT_PART2
+   391	
+   392	bash << 'AUDIT_SISA'
+   393	echo "=== 1. PLYMOUTH (kepalavv.png) & ISI techstart.xml ==="
+   394	cmp -s /root/ICONS/kepalavv.png /usr/share/plymouth/themes/spinner/watermark.png && echo "[OK] Plymouth watermark memakai kepalavv.png" || echo "[CEK] watermark.png belum sama dengan /root/ICONS/kepalavv.png"
+   395	for f in $(grep -oE '/usr/share/backgrounds/[^<"]+' /usr/share/backgrounds/techstart/techstart.xml 2>/dev/null | sort -u); do
+   396	    [ -f "$f" ] && echo "[OK] XML ref: $f" || echo "[GAGAL] XML ref hilang: $f"
+   397	done
+   398	
+   399	echo -e "\n=== 2. APLIKASI YANG DIHAPUS ==="
+   400	for item in /opt/flutter /opt/android-studio /usr/local/flutter /usr/local/android-studio /usr/bin/flutter; do
+   401	    [ -e "$item" ] && echo "[BELUM BERSIH] Masih ada: $item" || echo "[OK] Terhapus: $item"
+   402	done
+   403	grep -rliE "flutter|android.studio|techaflu|techastudio" /usr/local/share/applications/ /usr/share/applications/ 2>/dev/null && echo "[BELUM BERSIH] Ada sisa .desktop Flutter/Studio" || echo "[OK] Tidak ada sisa .desktop Flutter/Studio"
+   404	grep -rq "Aplikasi Mobile" /etc/dconf/db/local.d/ 2>/dev/null && echo "[BELUM BERSIH] Folder Aplikasi Mobile masih ada" || echo "[OK] Folder Aplikasi Mobile bersih"
+   405	dpkg-query -W -f='${Package}\n' aisleriot gnome-mahjongg gnome-mines gnome-sudoku thunderbird rhythmbox transmission-gtk 2>/dev/null && echo "[CEK] Paket bawaan di atas masih terpasang" || echo "[OK] Paket game/bloatware bersih"
+   406	
+   407	echo -e "\n=== 3. FIREFOX & DAFTAR APLIKASI TECHA* ==="
+   408	firefox --version 2>/dev/null || echo "[GAGAL] Firefox belum terpasang"
+   409	grep -H "^Name=" /usr/local/share/applications/*.desktop 2>/dev/null | sed "s|/usr/local/share/applications/||"
+   410	
+   411	echo -e "\n=== 4. FOLDER & WIDGETS (DCONF) ==="
+   412	[ -f /etc/dconf/db/local ] && echo "[OK] dconf terkompilasi" || echo "[GAGAL] Jalankan dconf update!"
+   413	cat /etc/dconf/db/local.d/07-techstart-folders 2>/dev/null || echo "[GAGAL] 07-techstart-folders belum ada"
+   414	cat /etc/dconf/db/local.d/08-techstart-extensions 2>/dev/null || echo "[GAGAL] 08-techstart-extensions belum ada"
+   415	ls -1 /usr/share/gnome-shell/extensions/
+   416	AUDIT_SISA
+   417	
+   418	# 1. Gabungkan perintah sesi yang sedang berjalan ke file riwayat permanen
+   419	history -a
